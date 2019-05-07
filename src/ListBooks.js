@@ -4,10 +4,11 @@ import PropTypes from 'prop-types'
 
 class ListBooks extends Component {
     static propTypes = {
-        bookInfo: PropTypes.array.isRequired
+        bookInfo: PropTypes.array.isRequired,
+        navigateToSearch: PropTypes.func.isRequired
     }
     render() {
-        const { bookInfo } = this.props;
+        const { bookInfo, navigateToSearch } = this.props;
         const currentlyReading = bookInfo.filter((book) => {
             return book.shelf === 'currentlyReading';
         });
@@ -29,7 +30,7 @@ class ListBooks extends Component {
                     <BookShelf shelfData={ read } shelfTitle="Read" />
                 </div>
                 <div className="open-search">
-                    <button onClick={() => this.setState({  })}>Add a book</button>
+                    <button onClick={()=> navigateToSearch()}>Add a book</button>
                 </div>
             </div>
         )

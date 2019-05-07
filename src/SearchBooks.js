@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class SearchBooks extends Component{
+    static propTypes = {
+        navigateToHome: PropTypes.func.isRequired
+    }
     render(){
+        const { navigateToHome } = this.props;
         return(
             <div className="search-books">
                 <div className="search-books-bar">
-                <button className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</button>
+                <button className="close-search" onClick={()=> navigateToHome()}>Close</button>
                 <div className="search-books-input-wrapper">
                     {/*
                     NOTES: The search from BooksAPI is limited to a particular set of search terms.

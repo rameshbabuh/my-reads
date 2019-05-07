@@ -28,15 +28,20 @@ class BooksApp extends React.Component {
                 <Route 
                     exact 
                     path="/" 
-                    render={()=>(
+                    render={({history})=>(
                         <ListBooks
                             bookInfo = { this.state.bookInfo }
+                            navigateToSearch = { () => { history.push("/search") }}
                         />
                     )}
                 />
                 <Route 
                     path="/search" 
-                    component={SearchBooks}
+                    render={({history}) => (
+                      <SearchBooks
+                        navigateToHome = {()=>{history.push("/")}}
+                      />
+                    )}
                 />
             </div>
         )
