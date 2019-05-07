@@ -21,6 +21,8 @@ class BookShelf extends Component{
                                         styles = {{backgroundImageURL: `url(${book.imageLinks.smallThumbnail})`}} 
                                         bookTitle = {book.title} 
                                         bookAuthors = {book.authors[0]}
+                                        currentShelf = {book.shelf}
+                                        onShelfChange = {(newShelf) =>{ this.props.onShelfChange(book, newShelf) }}
                                     />
                                 </li>
                             ))}

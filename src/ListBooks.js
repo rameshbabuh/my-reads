@@ -25,9 +25,9 @@ class ListBooks extends Component {
                     <h1>MyReads</h1>
                 </div>
                 <div className="list-books-content">
-                    <BookShelf shelfData={ currentlyReading } shelfTitle="Currently Reading" />
-                    <BookShelf shelfData={ wantToRead } shelfTitle="Want to Read" />
-                    <BookShelf shelfData={ read } shelfTitle="Read" />
+                    <BookShelf shelfData={ currentlyReading } shelfTitle="Currently Reading" onShelfChange = {this.props.onShelfChange} />
+                    <BookShelf shelfData={ wantToRead } shelfTitle="Want to Read" onShelfChange = {this.props.onShelfChange} />
+                    <BookShelf shelfData={ read } shelfTitle="Read" onShelfChange = {this.props.onShelfChange} />
                 </div>
                 <div className="open-search">
                     <button onClick={()=> navigateToSearch()}>Add a book</button>
