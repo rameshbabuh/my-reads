@@ -17,10 +17,15 @@ class BooksApp extends React.Component {
         })
     }
     updateShelfChange = (book, newShelf) => {
-        BooksAPI.update(book, newShelf).then((updateResponse) => {
-            this.setState((currentState) => ({
-                bookInfo: currentState.contacts.concat([contact])
-            }));
+        BooksAPI.update(book, newShelf).then(() => {
+            this.setState(currentState => {
+                currentState.bookInfo.forEach((item) => {
+                    if(item.id === book.id){
+                        item.shelf = newShelf;
+                    }
+                })
+                return {bookInfo: currentState.bookInfo}
+            })
         })
     }
     render() {
