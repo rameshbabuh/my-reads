@@ -18,7 +18,7 @@ class BookShelf extends Component{
                             {shelfData.map( book => (
                                 <li key={book.id}>
                                     <Book
-                                        styles = {{backgroundImageURL: `url(${book.imageLinks.smallThumbnail})`}} 
+                                        backgroundImageURL = {book.imageLinks.smallThumbnail}
                                         bookTitle = {book.title} 
                                         bookAuthors = {book.authors[0]}
                                         currentShelf = {book.shelf}

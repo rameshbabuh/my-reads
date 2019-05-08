@@ -2,7 +2,7 @@ import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import ListBooks from './ListBooks'
-import SearchBooks from './SearchBooks'
+import SearchPage from './SearchPage'
 import { Route } from 'react-router-dom'
 
 class BooksApp extends React.Component {
@@ -16,16 +16,12 @@ class BooksApp extends React.Component {
             }))
         })
     }
-    updateShelfChange = (book, newShelf) => {
-        BooksAPI.update(book, newShelf).then(() => {
-            this.setState(currentState => {
-                currentState.bookInfo.forEach((item) => {
-                    if(item.id === book.id){
-                        item.shelf = newShelf;
-                    }
-                })
-                return {bookInfo: currentState.bookInfo}
-            })
+    updateShelfChange = (newBookItem, newShelf) => {
+        BooksAPI.update(newBookItem, newShelf).then(() => {
+            newBookItem.shelf = newShelf;
+            this.setState(currentState => ({
+                bookInfo: currentState.bookInfo.filter((oldBookItem) => (newBookItem.id !== oldBookItem.id)).concat([newBookItem])
+            }))
         })
     }
     render() {
@@ -47,8 +43,11 @@ class BooksApp extends React.Component {
                 <Route 
                     path="/search" 
                     render={({history}) => (
-                      <SearchBooks
+                      <SearchPage
                         navigateToHome = {()=>{history.push("/")}}
+                        onShelfChange = {(book, newShelf) => {
+                            this.updateShelfChange(book, newShelf);
+                        }}
                       />
                     )}
                 />

@@ -4,18 +4,17 @@ import BookShelfChanger from './BookShelfChanger'
 
 class Book extends Component{
     static propTypes = {
-        styles: PropTypes.object.isRequired,
+        backgroundImageURL: PropTypes.string.isRequired,
         bookTitle: PropTypes.string.isRequired,
-        bookAuthors: PropTypes.string.isRequired,
-        currentShelf: PropTypes.string.isRequired
+        bookAuthors: PropTypes.string.isRequired
     }
     render(){
-        const { styles, bookTitle, bookAuthors, currentShelf } = this.props;
+        const { backgroundImageURL, bookTitle, bookAuthors, currentShelf } = this.props;
         return(
             <div className="book">
                 <div className="book-top">
-                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: styles.backgroundImageURL }}></div>
-                    <BookShelfChanger currentShelf={currentShelf} onShelfChange = {this.props.onShelfChange} />
+                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${backgroundImageURL})` }}></div>
+                    <BookShelfChanger currentShelf={currentShelf?currentShelf:'none'} onShelfChange = {this.props.onShelfChange} />
                 </div>
                 <div className="book-title">{bookTitle}</div>
                 <div className="book-authors">{bookAuthors}</div>

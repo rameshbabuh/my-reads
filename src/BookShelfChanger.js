@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 
 class BookShelfChanger extends Component{
-    static propTypes = {
-        currentShelf: PropTypes.string.isRequired,
-        onShelfChange: PropTypes.func.isRequired
-    }
     handleOnShelfChange = (e) => {
         const selectedShelf = e.target.value;
         this.props.onShelfChange(selectedShelf);
