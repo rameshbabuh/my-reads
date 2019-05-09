@@ -6,7 +6,7 @@ class Book extends Component{
     static propTypes = {
         backgroundImageURL: PropTypes.string.isRequired,
         bookTitle: PropTypes.string.isRequired,
-        bookAuthors: PropTypes.string.isRequired
+        bookAuthors: PropTypes.array.isRequired
     }
     render(){
         const { backgroundImageURL, bookTitle, bookAuthors, currentShelf } = this.props;
@@ -17,7 +17,7 @@ class Book extends Component{
                     <BookShelfChanger currentShelf={currentShelf?currentShelf:'none'} onShelfChange = {this.props.onShelfChange} />
                 </div>
                 <div className="book-title">{bookTitle}</div>
-                <div className="book-authors">{bookAuthors}</div>
+                <div className="book-authors">{bookAuthors.join(", ")}</div>
             </div>
         )
     }

@@ -20,7 +20,7 @@ class BookShelf extends Component{
                                     <Book
                                         backgroundImageURL = {book.imageLinks.smallThumbnail}
                                         bookTitle = {book.title} 
-                                        bookAuthors = {book.authors[0]}
+                                        bookAuthors = {book.authors}
                                         currentShelf = {book.shelf}
                                         onShelfChange = {(newShelf) =>{ this.props.onShelfChange(book, newShelf) }}
                                     />

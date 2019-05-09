@@ -13,8 +13,9 @@ class SearchResults extends Component{
                                 <Book
                                     backgroundImageURL = {book.imageLinks?(book.imageLinks.smallThumbnail):''} 
                                     bookTitle = {book.title} 
-                                    bookAuthors = {book.authors?book.authors[0]:''}
+                                    bookAuthors = {book.authors?book.authors:[]}
                                     onShelfChange = {(newShelf) =>{ this.props.onShelfChange(book, newShelf) }}
+                                    currentShelf = {book.shelf}
                                 />
                             </li>
                         ))

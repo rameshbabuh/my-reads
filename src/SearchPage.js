@@ -15,8 +15,9 @@ class SearchBooks extends Component{
         if(searchStr !== ''){
             BooksAPI.search(searchStr).then((searchList)=>{
                 if(!searchList.error){
+                    const updatedSearchList = this.updateShelfAttr(searchList);
                     this.setState(() => ({
-                        searchList
+                        searchList: updatedSearchList
                     }))
                 } else{
                     this.clearSearchList();
@@ -31,24 +32,20 @@ class SearchBooks extends Component{
             searchList: []
         })) 
     }
-    updateState = (searchListCopy) => {
-        this.setState(()=>({
-            searchList: searchListCopy
-        }))
-    }
-    render(){
-        const { currentShelf, navigateToHome } = this.props;
-        const { searchList } = this.state;
-        var searchListCopy = searchList;
-        searchListCopy.length !== 0 && searchListCopy.map((searchedItem)=>{
-            var commonItem = currentShelf.filter((currentShelfItem)=>(currentShelfItem.id === searchedItem.id))
+    updateShelfAttr = (searchList) => {
+        const currentShelfList = this.props.currentShelf;
+        searchList.length !== 0 && searchList.map((searchedItem)=>{
+            var commonItem = currentShelfList.filter((currentShelfItem)=>(currentShelfItem.id === searchedItem.id))
             if(commonItem && commonItem.length){
                 searchedItem.shelf = commonItem[0].shelf;
             }
-            console.log(searchListCopy);
-            return searchListCopy;
+            return searchList;
         })
-        this.updateState(searchListCopy);
+        return searchList;
+    }
+    render(){
+        const { navigateToHome } = this.props;
+
         return(
             <div className="search-books">
                 <div className="search-books-bar">
