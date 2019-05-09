@@ -14,7 +14,6 @@ class SearchBooks extends Component{
         var searchStr = (e.target.value).trim();
         if(searchStr !== ''){
             BooksAPI.search(searchStr).then((searchList)=>{
-                console.log(searchList);
                 if(!searchList.error){
                     this.setState(() => ({
                         searchList
@@ -32,27 +31,34 @@ class SearchBooks extends Component{
             searchList: []
         })) 
     }
+    updateState = (searchListCopy) => {
+        this.setState(()=>({
+            searchList: searchListCopy
+        }))
+    }
     render(){
-        const { navigateToHome } = this.props;
+        const { currentShelf, navigateToHome } = this.props;
         const { searchList } = this.state;
+        var searchListCopy = searchList;
+        searchListCopy.length !== 0 && searchListCopy.map((searchedItem)=>{
+            var commonItem = currentShelf.filter((currentShelfItem)=>(currentShelfItem.id === searchedItem.id))
+            if(commonItem && commonItem.length){
+                searchedItem.shelf = commonItem[0].shelf;
+            }
+            console.log(searchListCopy);
+            return searchListCopy;
+        })
+        this.updateState(searchListCopy);
         return(
             <div className="search-books">
                 <div className="search-books-bar">
                     <button className="close-search" onClick={()=> {this.clearSearchList(); navigateToHome()}}>Close</button>
                     <div className="search-books-input-wrapper">
-                        {/*
-                        NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                        You can find these search terms here:
-                        https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                        However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                        you don't find a specific author or title. Every search is limited by search terms.
-                        */}
                         <input type="text" placeholder="Search by title or author" autoFocus onChange={this.filterResults}/>
 
                     </div>
                 </div>
-                <SearchResults SearchList={searchList} onShelfChange={this.props.onShelfChange} />
+                <SearchResults SearchList={this.state.searchList} onShelfChange={this.props.onShelfChange} />
             </div>
         )
     }

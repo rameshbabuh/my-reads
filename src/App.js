@@ -44,6 +44,7 @@ class BooksApp extends React.Component {
                     path="/search" 
                     render={({history}) => (
                       <SearchPage
+                        currentShelf = {this.state.bookInfo}
                         navigateToHome = {()=>{history.push("/")}}
                         onShelfChange = {(book, newShelf) => {
                             this.updateShelfChange(book, newShelf);

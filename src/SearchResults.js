@@ -4,7 +4,6 @@ import Book from './Book'
 class SearchResults extends Component{
     render(){
         const { SearchList } = this.props;
-        console.log(SearchList);
         return(
             <div className="search-books-results">
                 <ol className="books-grid">
