@@ -18,7 +18,6 @@ class ListBooks extends Component {
         const read = bookInfo.filter((book) => {
             return book.shelf === 'read';
         });
-        console.log(bookInfo);
         return (
             <div className="list-books">
                 <div className="list-books-title">
