@@ -8,13 +8,17 @@ class SearchBooks extends Component{
         navigateToHome: PropTypes.func.isRequired
     }
     state = {
-        searchList: []
+        searchList: [],
+        query: ''
     }
     filterResults = (e) => {
         var searchStr = (e.target.value).trim();
+        this.setState(()=>({
+            query: searchStr
+        }))
         if(searchStr !== ''){
             BooksAPI.search(searchStr).then((searchList)=>{
-                if(!searchList.error){
+                if(!searchList.error && searchStr === this.state.query){
                     const updatedSearchList = this.updateShelfAttr(searchList);
                     this.setState(() => ({
                         searchList: updatedSearchList
@@ -45,17 +49,16 @@ class SearchBooks extends Component{
     }
     render(){
         const { navigateToHome } = this.props;
-
+        const { query, searchList } = this.state;
         return(
             <div className="search-books">
                 <div className="search-books-bar">
                     <button className="close-search" onClick={()=> {this.clearSearchList(); navigateToHome()}}>Close</button>
                     <div className="search-books-input-wrapper">
-                        <input type="text" placeholder="Search by title or author" autoFocus onChange={this.filterResults}/>
-
+                        <input type="text" placeholder="Search by title or author" value={query} autoFocus onChange={this.filterResults}/>
                     </div>
                 </div>
-                <SearchResults SearchList={this.state.searchList} onShelfChange={this.props.onShelfChange} />
+                <SearchResults SearchList={searchList} onShelfChange={this.props.onShelfChange} />
             </div>
         )
     }
