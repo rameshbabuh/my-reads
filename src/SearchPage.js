@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import SearchResults from './SearchResults'
 import * as BooksAPI from './BooksAPI'
+import _ from 'lodash'
 
 class SearchBooks extends Component{
     static propTypes = {
@@ -11,8 +12,12 @@ class SearchBooks extends Component{
         searchList: [],
         query: ''
     }
-    filterResults = (e) => {
-        var searchStr = (e.target.value).trim();
+    constructor(){
+        super();
+        this.debouncedCallback = _.debounce(this.filterResults, 300);
+    }
+    filterResults = (searchStr) => {
+        // var searchStr = (e.target.value).trim();
         this.setState(()=>({
             query: searchStr
         }))
@@ -47,15 +52,18 @@ class SearchBooks extends Component{
         })
         return searchList;
     }
+    onChange = (e) => {
+        this.debouncedCallback(e.target.value);
+    }
     render(){
         const { navigateToHome } = this.props;
-        const { query, searchList } = this.state;
+        const { searchList } = this.state;
         return(
             <div className="search-books">
                 <div className="search-books-bar">
                     <button className="close-search" onClick={()=> {this.clearSearchList(); navigateToHome()}}>Close</button>
                     <div className="search-books-input-wrapper">
-                        <input type="text" placeholder="Search by title or author" value={query} autoFocus onChange={this.filterResults}/>
+                        <input type="text" placeholder="Search by title or author" autoFocus onChange={this.onChange.bind(this)}/>
                     </div>
                 </div>
                 <SearchResults SearchList={searchList} onShelfChange={this.props.onShelfChange} />

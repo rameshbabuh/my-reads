@@ -44,3 +44,7 @@ The backend API uses a fixed set of cached search results and is limited to a pa
 ![image](/src/screenshots/MyReads-BookShelf.png?raw=true "MyReads-BookShelf")
 
 ![image](/src/screenshots/MyReads-Search.png?raw=true "MyReads-Search")
+
+## License
+
+MIT

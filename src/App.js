@@ -3,7 +3,8 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import ListBooks from './ListBooks'
 import SearchPage from './SearchPage'
-import { Route } from 'react-router-dom'
+import PageNotFound from './PageNotFound'
+import { Switch, Route } from 'react-router-dom'
 
 class BooksApp extends React.Component {
     state = {
@@ -27,31 +28,38 @@ class BooksApp extends React.Component {
     render() {
         return (
             <div className="app">
-                <Route 
-                    exact 
-                    path="/" 
-                    render={({history})=>(
-                        <ListBooks
-                            bookInfo = { this.state.bookInfo }
-                            navigateToSearch = { () => { history.push("/search") }} 
+                <Switch>
+                    <Route 
+                        exact 
+                        path="/" 
+                        render={({history})=>(
+                            <ListBooks
+                                bookInfo = { this.state.bookInfo }
+                                navigateToSearch = { () => { history.push("/search") }} 
+                                onShelfChange = {(book, newShelf) => {
+                                    this.updateShelfChange(book, newShelf);
+                                }}
+                            />
+                        )}
+                    />
+                    <Route 
+                        path="/search" 
+                        render={({history}) => (
+                        <SearchPage
+                            currentShelf = {this.state.bookInfo}
+                            navigateToHome = {()=>{history.push("/")}}
                             onShelfChange = {(book, newShelf) => {
                                 this.updateShelfChange(book, newShelf);
                             }}
                         />
-                    )}
-                />
-                <Route 
-                    path="/search" 
-                    render={({history}) => (
-                      <SearchPage
-                        currentShelf = {this.state.bookInfo}
-                        navigateToHome = {()=>{history.push("/")}}
-                        onShelfChange = {(book, newShelf) => {
-                            this.updateShelfChange(book, newShelf);
-                        }}
-                      />
-                    )}
-                />
+                        )}
+                    />
+                    <Route render={({history}) => (
+                            <PageNotFound navigateToHome = {()=>{history.push("/")}} />
+                        )}
+                    />
+
+                </Switch>
             </div>
         )
     }
