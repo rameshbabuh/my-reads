@@ -9,6 +9,8 @@ To get started developing right away:
 * install all project dependencies with `npm install`
 * start the development server with `npm start`
 
+You can also access the app from using this link: [My-Reads-App](http://direful-gun.surge.sh/)
+
 ## Directory structure
 ```bash
 ├── CONTRIBUTING.md
